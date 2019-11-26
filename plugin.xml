@@ -14,7 +14,7 @@
     </js-module>
 
     <platform name="android">
-        <framework src="build.gradle" custom="true" type="gradleReference" />
+        <framework src="com.google.android.play:core:1.6.4"/>
 
         <config-file target="config.xml" parent="/*">
             <feature name="InAppPlayUpdate">
