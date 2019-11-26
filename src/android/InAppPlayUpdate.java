@@ -1,4 +1,4 @@
-package ru.rlisystems.mobile.plugins.inappplayupdate;
+package ru.rlisystems.cordova.plugins.inappplayupdate;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
