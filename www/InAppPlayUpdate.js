@@ -4,7 +4,7 @@ var InAppPlayUpdate = function() {
     console.log('InAppPlayUpdate instanced');
 };
 
-InAppPlayUpdate.prototype.show = function(msg, onSuccess, onError) {
+InAppPlayUpdate.prototype.update = function(onSuccess, onError) {
     var errorCallback = function(obj) {
         onError(obj);
     };
@@ -13,7 +13,7 @@ InAppPlayUpdate.prototype.show = function(msg, onSuccess, onError) {
         onSuccess(obj);
     };
 
-    exec(successCallback, errorCallback, 'InAppPlayUpdate', 'show', [msg]);
+    exec(successCallback, errorCallback, 'InAppPlayUpdate', 'update', []);
 };
 
 if (typeof module != 'undefined' && module.exports) {
