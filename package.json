@@ -1,0 +1,34 @@
+{
+  "name": "cordova-plugin-in-app-play-update",
+  "version": "1.0.0",
+  "description": "In App Play Update Plugin",
+  "cordova": {
+    "id": "cordova-plugin-in-app-play-update",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anatoly-spb/cordova-plugin-in-app-play-update.git"
+  },
+  "keywords": [
+    "android",
+    "in-app",
+    "update",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "Anatoly Shirokov",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/anatoly-spb/cordova-plugin-in-app-play-update/issues"
+  },
+  "homepage": "https://github.com/anatoly-spb/cordova-plugin-in-app-play-update#readme"
+}

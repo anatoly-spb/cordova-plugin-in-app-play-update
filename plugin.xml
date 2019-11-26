@@ -1,10 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="cordova-plugin-in-app-play-update" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>InAppPlayUpdate</name>
-
     <description>In App Play Update Plugin</description>
     <license>Apache 2.0</license>
-    <keywords>android, in-app update</keywords>
+    <keywords>android,in-app,update</keywords>
 
     <engines>
       <engine name="cordova" version=">=3.0.0" />
