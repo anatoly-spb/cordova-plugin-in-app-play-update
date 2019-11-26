@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-in-app-play-update" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>InAppPlayUpdate</name>
+
+    <description>In App Play Update Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>android, in-app update</keywords>
+
+    <engines>
+      <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <js-module name="InAppPlayUpdate" src="www/InAppPlayUpdate.js">
+        <clobbers target="InAppPlayUpdate" />
+    </js-module>
+
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="InAppPlayUpdate">
+                <param name="android-package" value="ru.rlisystems.mobile.plugins.inappplayupdate" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/InAppPlayUpdate.java" target-dir="src/ru/rlisystems/cordova/plugins/inappplayupdate" />
+    </platform>
+</plugin>
