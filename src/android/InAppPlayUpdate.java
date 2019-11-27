@@ -29,6 +29,7 @@ public class InAppPlayUpdate extends CordovaPlugin {
     private final AtomicReference<CallbackContext> currentCallbackContext = new AtomicReference<CallbackContext>();
 
     public InAppPlayUpdate() {
+        Log.i(InAppPlayUpdate.class.getSimpleName(), "Constructed");
     }
 
     @Override

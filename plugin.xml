@@ -18,7 +18,7 @@
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="InAppPlayUpdate">
-                <param name="android-package" value="ru.rlisystems.cordova.plugins.inappplayupdate" />
+                <param name="android-package" value="ru.rlisystems.cordova.plugins.inappplayupdate.InAppPlayUpdate" />
             </feature>
         </config-file>
 
