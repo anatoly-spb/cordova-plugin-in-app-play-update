@@ -16,7 +16,7 @@
     <platform name="android">
         <framework src="com.google.android.play:core:1.6.4"/>
 
-        <config-file target="config.xml" parent="/*">
+        <config-file target="res/xml/config.xml" parent="/*">
             <feature name="InAppPlayUpdate">
                 <param name="android-package" value="ru.rlisystems.cordova.plugins.inappplayupdate" />
             </feature>
