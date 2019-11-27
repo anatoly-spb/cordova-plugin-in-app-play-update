@@ -10,7 +10,7 @@
     </engines>
 
     <js-module name="InAppPlayUpdate" src="www/InAppPlayUpdate.js">
-        <clobbers target="InAppPlayUpdate" />
+        <clobbers target="cordova.plugins.InAppPlayUpdate" />
     </js-module>
 
     <platform name="android">
