@@ -1,6 +1,6 @@
 var exec = cordova.require('cordova/exec');
 
-var InAppPlayUpdate = function() {
+function InAppPlayUpdate() {
     console.log('InAppPlayUpdate instanced');
 };
 
@@ -17,5 +17,5 @@ InAppPlayUpdate.prototype.update = function(onSuccess, onError) {
 };
 
 if (typeof module != 'undefined' && module.exports) {
-    module.exports = InAppPlayUpdate;
+    module.exports = new InAppPlayUpdate();
 }
