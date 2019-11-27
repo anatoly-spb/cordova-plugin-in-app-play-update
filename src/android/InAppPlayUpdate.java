@@ -110,8 +110,6 @@ public class InAppPlayUpdate extends CordovaPlugin {
                             callbackContext.error("error");
                     }
                 }
-            } else {
-                callbackContext.success("updated");
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
