@@ -18,13 +18,18 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED;
 
 public class InAppPlayUpdate extends CordovaPlugin {
     private static final int MY_REQUEST_CODE = 777;
-    private CallbackContext currentCallbackContext = null;
+    private final AtomicReference<CallbackContext> currentCallbackContext = new AtomicReference<CallbackContext>();
+
+    public InAppPlayUpdate() {
+    }
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -44,38 +49,45 @@ public class InAppPlayUpdate extends CordovaPlugin {
     }
 
     private void update(CallbackContext callbackContext) {
-        // Creates instance of the manager.
-        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(webView.getContext());
+        currentCallbackContext.set(callbackContext);
 
-        // Returns an intent object that you use to check for an update.
-        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                // Creates instance of the manager.
+                AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(cordova.getContext());
 
-        // Checks that the platform will allow the specified type of update.
-        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                    // For a flexible update, use AppUpdateType.FLEXIBLE
-                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-                // Request the update.
-                try {
-                    if (appUpdateManager.startUpdateFlowForResult(
-                            // Pass the intent that is returned by 'getAppUpdateInfo()'.
-                            appUpdateInfo,
-                            // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
-                            AppUpdateType.IMMEDIATE,
-                            // The current activity making the update request.
-                            cordova.getActivity(),
-                            // Include a request code to later monitor this update request.
-                            MY_REQUEST_CODE)) {
-                        currentCallbackContext = callbackContext;
+                // Returns an intent object that you use to check for an update.
+                Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
+                // Checks that the platform will allow the specified type of update.
+                appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                            // For a flexible update, use AppUpdateType.FLEXIBLE
+                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                        // Request the update.
+                        try {
+                            if (appUpdateManager.startUpdateFlowForResult(
+                                    // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                                    appUpdateInfo,
+                                    // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                                    AppUpdateType.IMMEDIATE,
+                                    // The current activity making the update request.
+                                    cordova.getActivity(),
+                                    // Include a request code to later monitor this update request.
+                                    MY_REQUEST_CODE)) {
+                            } else {
+                                callbackContext.error("error");
+                            }
+                        } catch (IntentSender.SendIntentException e) {
+                            callbackContext.error("error");
+                            e.printStackTrace();
+                        }
                     } else {
-                        callbackContext.error("error");
+                        callbackContext.success("uptodate");
                     }
-                } catch (IntentSender.SendIntentException e) {
-                    callbackContext.error("error");
-                    e.printStackTrace();
-                }
-            } else {
-                callbackContext.success();
+                });
+
             }
         });
     }
@@ -83,12 +95,8 @@ public class InAppPlayUpdate extends CordovaPlugin {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == MY_REQUEST_CODE) {
+            final CallbackContext callbackContext = currentCallbackContext.getAndSet(null);
             if (resultCode != RESULT_OK) {
-                CallbackContext callbackContext = null;
-                synchronized (this) {
-                    callbackContext = currentCallbackContext;
-                    currentCallbackContext = null;
-                }
                 if (callbackContext != null) {
                     switch(resultCode) {
                         case RESULT_CANCELED:
@@ -101,6 +109,8 @@ public class InAppPlayUpdate extends CordovaPlugin {
                             callbackContext.error("error");
                     }
                 }
+            } else {
+                callbackContext.success("updated");
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
