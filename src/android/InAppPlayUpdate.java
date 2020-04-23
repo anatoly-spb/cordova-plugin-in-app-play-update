@@ -62,7 +62,13 @@ public class InAppPlayUpdate extends CordovaPlugin {
                 Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
                 // Checks that the platform will allow the specified type of update.
+                appUpdateInfoTask.addOnFailureListener(appUpdateInfo ->{
+                    Log.i(InAppPlayUpdate.class.getSimpleName(), "Updated failure listener called");
+                    callbackContext.success("uptodate");
+                });
+
                 appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+                    Log.i(InAppPlayUpdate.class.getSimpleName(), "Updated success listener called");
                     if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                             // For a flexible update, use AppUpdateType.FLEXIBLE
                             && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {

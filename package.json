@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-in-app-play-update",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "In App Play Update Plugin",
   "cordova": {
     "id": "cordova-plugin-in-app-play-update",
