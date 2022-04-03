@@ -14,7 +14,7 @@
     </js-module>
 
     <platform name="android">
-        <framework src="com.google.android.play:core:1.6.4"/>
+        <framework src="com.google.android.play:core:1.7.2"/>
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="InAppPlayUpdate">
